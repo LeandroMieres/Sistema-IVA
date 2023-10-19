@@ -1,21 +1,36 @@
+<?php
+require_once("./config/app.php");
+require_once("./autoload.php");
+require_once("./APP/View/inc/session.php");
+
+if(isset($_GET['views'])) {
+    $url = explode("/", $_GET['views']);
+}else{
+    $url = ["login"];
+}
+?>
+<!-- VISUALIZAR EN PANTALLA -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="APP/View/Css/style.css">
-    <link rel="shortcut icon" href="APP/View/ico/pro.png" type="image/x-icon">
-    <title>SISTEMA DE IVA</title>
+    <?php require_once("./APP/View/inc/head.php"); ?>
 </head>
 <body>
     <?php
-    
-    require_once("APP/View/content/Contribuyente.html");
-    
-    require_once("APP/View/content/Compra.html");
-    
-    require_once("APP/View/content/Ventas.html");
-    
+
+    use APP\Controller\VistaControlador;
+
+    $VistaControlador = new VistaControlador();
+    $vista = $VistaControlador->ControlVistaControlador($url[0]); // EN LA POSICION CERO MUESTRA LAS VISTAS
+
+    if($vista == "login" || $vista == "404"){
+        require_once("./APP/View/Content/".$vista.".php");
+    }else{
+        /* INGRESAR PARTES DE COGIDOS ACA */
+
+        require_once($vista);
+    } 
+    require_once("./APP/View/inc/script.php");
     ?>
 </body>
 </html>

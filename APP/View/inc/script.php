@@ -1,0 +1,1 @@
+<script scr="<?php echo APP_URL;?>View/JS/index.js"></script>
